@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oscar registration form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    header {
+      background-color: #f2f2f2;
+      padding: 1em;
+      text-align: center;
+      border-radius: 10px;
+    }
+    .container{
+      text-align: center;
+      width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+      border: #3b62af solid 1px;
+      padding: 10px;
+    }
+
+    #clock {
+      font-family: 'VT323', monospace;
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    form {
+      max-width: 550px;
+      margin: 0 auto;
+      text-align: left;
+      background-color: #90bee9;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    label {
+      font-size: 18px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    select {
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+      background-color: #4c77af;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #3b62af;
+    }
+
+    input[type="reset"]:hover {
+      background-color: #3b62af;
+    }
+
+    #output-section {
+      background-color: #ececec;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 4px;
+      text-align: center;
+      border-radius: 10px;
+    }
+  </style>
+  <script>
+    function updateClock() {
+      let time = new Date();
+      let hours = time.getHours();
+      let minutes = time.getMinutes();
+      let seconds = time.getSeconds();
+      document.querySelector('#clock').innerHTML = `${hours}:${minutes}:${seconds}`;
+    }
+
+    setInterval(updateClock, 1000);
+
+    function jsonObj() {
+      const formData = {
+        name: document.getElementById("name").value,
+        date: document.getElementById("date").value,
+        email: document.getElementById("email").value,
+        genres: document.getElementById("genres").value,
+        language: []
+      };
+
+      const checkboxes = document.querySelectorAll('input[name="language"]:checked');
+      for (let i = 0; i < checkboxes.length; i++) {
+        formData.language.push(checkboxes[i].value);
+      }
+
+      const forOutput = document.getElementById("output-section");
+      forOutput.innerHTML = "Submitted data are: " + JSON.stringify(formData);
+    }
+    document.getElementById("resetBtn").addEventListener("click", function () {
+      document.getElementById("myForm").reset();
+    });
+
+  </script>
+</head>
+
+<body>
+  <div class="container">
+  <header>
+    <div id="clock"></div>
+  </header>
+  <h1>Oscar nomination registration form</h1>
+  
+  <form id="registration-form" onsubmit="jsonObj(); return false">
+    <label for="name">Movie Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="date">Release Date:</label>
+    <input type="date" id="date" name="date" required> <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="genres">Genres:</label>
+    <select id="genres" name="genres" required>
+      <option value="" disabled selected>Select</option>
+      <option value="Drama">Drama</option>
+      <option value="Comedy">Comedy</option>
+      <option value="Action">Action</option>
+      <option value="Fantasy">Fantasy</option>
+      <option value="Animation">Animation</option>
+      <option value="Documentary">Documentary</option>
+      <option value="Sci-Fi">Sci-Fi</option>
+      <option value="Adventure">Adventure</option>
+      <option value="Biography">Biography</option>
+    </select>
+    <label for="language">Language:</label>
+    <input type="checkbox" id="language" name="language" value="english"> English
+    <input type="checkbox" id="language" name="language" value="french"> French
+    <input type="checkbox" id="language" name="language" value="spanish"> Spanish
+    <input type="checkbox" id="language" name="language" value="japanese"> Japanese
+    <input type="checkbox" id="language" name="language" value="chinese"> Chinese
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset" onclick="document.getElementById('registration-form').reset()">
+  </form>
+  <footer>
+    <div id="output-section"></div>
+  </footer>
+</div>
+</body>
+
+</html>
